@@ -6,7 +6,7 @@ async function run() {
   try { 
     
     const token = core.getInput('github_token') || github.context.token;
-    console.log(github.context.repo());
+    console.log(github.context);
     const owner = github.context.repo().owner;
     const repository = github.context.repo().repo;
     const githubApi = new GithubApi(token, owner, repository);
