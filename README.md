@@ -21,8 +21,8 @@ Github action to check PR existence before merging another PR
 ```yaml
 uses: nrbdigital/nrb-dt-pull-request-checker-action@master
 with:
-  github_token: {{ secret.GITHUB_TOKEN }}
-  head_ref: hotfix/0.6.2
-  base_ref: master
+  github_token: ${{ secret.GITHUB_TOKEN }}
+  head_ref: ${{ env.GITHUB_HEAD_REF }}
+  base_ref: ${{ env.GITHUB_BASE_REF }}
   default_ref: develop
 ```
