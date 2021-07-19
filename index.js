@@ -6,9 +6,9 @@ async function run() {
   try { 
     
     const token = core.getInput('github_token') || github.context.token;
-    console.log(github.context);
-    const owner = github.context.repo().owner;
-    const repository = github.context.repo().repo;
+    console.log(github.context.repository.owner);
+    const owner = github.context.payload.repository.owner.name;
+    const repository = github.context.payload.repository.name;
     const githubApi = new GithubApi(token, owner, repository);
 
     const GITHUB_HEAD_REF = core.getInput('head_ref') || 'hotfix/0.6.2';
