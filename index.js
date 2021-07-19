@@ -27,8 +27,9 @@ async function run() {
 
     pullRequestList.data.forEach(pullRequest => {
 
-      // Find the pull request number of the pull request that trigger the workflow
+      // Find the opened pull request to block if the GITHUB_HEAD_REF is not merged into DEFAULT_REF
       if (pullRequest.head.ref === GITHUB_HEAD_REF && pullRequest.head.sha === GITHUB_HEAD_SHA && pullRequest.base.ref === GITHUB_BASE_REF && pullRequest.state === 'open') {
+        console.log('The source pull request is found : ', pullRequest.html_url);
         sourcePullRequest = pullRequest;
       }
 
