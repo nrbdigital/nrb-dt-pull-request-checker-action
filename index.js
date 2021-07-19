@@ -2,15 +2,13 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const GithubApi = require('./lib/github-api');
 
-// To run locally
-process.env.GITHUB_REPOSITORY = 'nrbdigital/ethias-oi-test-perso'
-
 async function run() {
   try { 
     
     const token = core.getInput('github_token') || github.context.token;
-    const owner = github.context.repository_owner;
-    const repository = github.context.repository.split('/')[1];
+    console.log(github.context.repo());
+    const owner = github.context.repo().owner;
+    const repository = github.context.repo().repo;
     const githubApi = new GithubApi(token, owner, repository);
 
     const GITHUB_HEAD_REF = core.getInput('head_ref') || 'hotfix/0.6.2';
@@ -22,10 +20,6 @@ async function run() {
 
     // Get all pull requests related to the head branch
     let pullRequestList = await githubApi.getPullRequestsForHeadBranch(GITHUB_HEAD_REF);
-
-    // DEBUG
-    // const resultPath = path.join(process.cwd(), 'result.json');
-    // fs.writeFileSync(resultPath, JSON.stringify(pullRequestList));
 
     let sourcePullRequest = null;
     let newPullRequestNeeded = true;
