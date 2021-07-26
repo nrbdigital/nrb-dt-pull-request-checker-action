@@ -63,7 +63,11 @@ async function run() {
 
     // Add a review to the PR
     let reviewState = shouldLockPullRequest ? 'REQUEST_CHANGES' : 'APPROVE';
-    await githubApi.reviewPullRequest(sourcePullRequest.number, commentContent, reviewState);
+    if(sourcePullRequest) {
+      await githubApi.reviewPullRequest(sourcePullRequest.number, commentContent, reviewState);
+    } else {
+      console.log('No source pull request found. The hotfix was probably first merged in develop before master (and it\'s ok)');
+    }
   } 
   catch (error) {
     core.setFailed(error.message);
